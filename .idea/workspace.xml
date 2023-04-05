@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dcc69b71-ff1c-4939-a18a-cf8b1ed5fead" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/Elevator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/ElevatorControlSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/enums/ElevatorDirection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/enums/ElevatorStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/exceptions/InvalidNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/interfaces/ElevatorControlSystemFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/interfaces/ElevatorFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/util/Dot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/util/DotHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/util/FileUtils.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2N6QMJgd7VJYpX4heSdZRMeaWUu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mhmb/automata_learning/SSH-Model-Learning/ssh-dataset/data/ssh-dataset/ssh-mapper-experimnts/ssh-learner&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dcc69b71-ff1c-4939-a18a-cf8b1ed5fead" name="Changes" comment="" />
+      <created>1678982004079</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678982004079</updated>
+      <workItem from="1678982005261" duration="27987000" />
+      <workItem from="1680616962856" duration="6237000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoSuchMethodException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/institute/teias/ds/util/Dot.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
