@@ -60,6 +60,7 @@ public class Main {
 
     public static void learnElevator(Constructor<?> elevConst, Object elevParam1) throws Exception{
         SimplePOJOTestDriver driver = new SimplePOJOTestDriver(elevConst, elevParam1 );
+        System.out.println("************************88");
         Method mvUp = Elevator.class.getMethod("moveUp");
         Method mvDown = Elevator.class.getMethod("moveDown");
 //        Method dirc = Elevator.class.getMethod("direction");

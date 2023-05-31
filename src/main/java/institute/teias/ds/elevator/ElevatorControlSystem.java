@@ -14,8 +14,8 @@ import java.util.Queue;
 public class ElevatorControlSystem implements ElevatorControlSystemFactory {
 
     public static final int MAX_ELEVATORS = 16;
-    Integer numberOfElevators;
-    Integer numberOfFloors;
+    Integer numberOfElevators = 0;
+    Integer numberOfFloors = 0;
     ArrayList<Elevator> elevators;
     Queue<Integer> pickupLocations;
 
@@ -49,7 +49,7 @@ public class ElevatorControlSystem implements ElevatorControlSystemFactory {
     }
 
     @Override
-    public int step() {
+    public void step() {
         // Loop though every elevator
         for (Elevator currElevator : elevators){
             // Check to figure out which ones are unoccupied and update call
@@ -78,6 +78,5 @@ public class ElevatorControlSystem implements ElevatorControlSystemFactory {
                         break;
             }
         }
-        return elevators.get(elevators.size()-1).currentFloor();
     }
 }
