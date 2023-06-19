@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcc69b71-ff1c-4939-a18a-cf8b1ed5fead" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/institute/teias/ds/elevator/ElevatorControlSystemTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/institute/teias/ds/elevator/ElevatorTest.java" afterDir="false" />
+    <list default="true" id="dcc69b71-ff1c-4939-a18a-cf8b1ed5fead" name="Changes" comment="feat: add dot file creator module">
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/mapper/ElevatorCSMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/mapper/ElevatorMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/institute/teias/ds/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/ElevatorControlSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/institute/teias/ds/elevator/ElevatorControlSystem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,23 +57,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/mhmb/automata_learning/repos/elevator/elevator-simulation",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mhmb/automata_learning/repos/elevator/elevator-simulation&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="institute.teias.ds.elevator" />
@@ -95,7 +94,10 @@
       <workItem from="1681676996894" duration="1341000" />
       <workItem from="1681679084148" duration="599000" />
       <workItem from="1683305400828" duration="1197000" />
-      <workItem from="1685441976990" duration="2655000" />
+      <workItem from="1685441976990" duration="3684000" />
+      <workItem from="1686223968363" duration="6824000" />
+      <workItem from="1687121648120" duration="4861000" />
+      <workItem from="1687151150330" duration="1419000" />
     </task>
     <task id="LOCAL-00001" summary="feat: Create Elevator model and init project">
       <created>1680656588366</created>
