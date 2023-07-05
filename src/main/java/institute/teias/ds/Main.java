@@ -21,10 +21,11 @@ import de.learnlib.util.Experiment;
 import de.learnlib.util.statistics.SimpleProfiler;
 import institute.teias.ds.elevator.Elevator;
 import institute.teias.ds.elevator.ElevatorControlSystem;
-import institute.teias.ds.elevator.exceptions.InvalidNumber;
+import institute.teias.ds.mapper.ElevatorCSMapper;
 import net.automatalib.automata.transducers.MealyMachine;
 import net.automatalib.automata.transducers.impl.compact.CompactMealy;
 import de.learnlib.drivers.reflect.MethodInput;
+import de.learnlib.api.oracle.EquivalenceOracle.MealyEquivalenceOracle;
 
 import net.automatalib.serialization.dot.GraphDOT;
 import net.automatalib.visualization.Visualization;
@@ -196,20 +197,93 @@ public class Main {
         return learner.getHypothesisModel();
     }
 
+    public static void learnWithMapper (Constructor<?> elevCsMapperConst, Object elevCsMapperParam1) throws Exception {
+        SimplePOJOTestDriver driver = new SimplePOJOTestDriver(elevCsMapperConst, elevCsMapperParam1);
+
+        driver.addInput("pick_1", "pickUpPassenger", 1);
+        driver.addInput("pick_2", "pickUpPassenger", 2);
+        driver.addInput("pick_3", "pickUpPassenger", 3);
+        driver.addInput("pick_4", "pickUpPassenger", 4);
+        driver.addInput("floor", "currentFloor");
+        driver.addInput("status", "elevatorStatus");
+        driver.addInput("step", "stepTime");
+
+        Alphabet<MethodInput> alphabet = driver.getInputs();
+
+        StatisticSUL<MethodInput, MethodOutput> statisticSul = new ResetCounterSUL<>("membership queries", driver);
+
+        SUL<MethodInput, MethodOutput> effectiveSul = statisticSul;
+
+        effectiveSul = SULCaches.createCache(driver.getInputs(), effectiveSul);
+
+        SULOracle<MethodInput, MethodOutput> mqOracle = new SULOracle<>(effectiveSul);
+
+
+        LearningAlgorithm.MealyLearner<MethodInput, MethodOutput> lstar =
+                new ExtensibleLStarMealyBuilder<MethodInput, MethodOutput>().withAlphabet(driver.getInputs()) // input alphabet
+                        .withOracle(mqOracle) // membership oracle
+                        .create();
+
+        MealyEquivalenceOracle<MethodInput, MethodOutput> randomWalks =
+                new RandomWalkEQOracle<>(driver,
+                        RESET_PROBABILITY,
+                        MAX_STEPS,
+                        false,
+                        new Random(RANDOM_SEED));
+
+        Experiment.MealyExperiment<MethodInput, MethodOutput> experiment =
+                new Experiment.MealyExperiment<>(lstar, randomWalks, driver.getInputs());
+
+        experiment.setProfile(true);
+
+        experiment.setLogModels(true);
+
+        experiment.run();
+
+        MealyMachine<?, MethodInput, ?, MethodOutput> result = experiment.getFinalHypothesis();
+
+        System.out.println("-------------------------------------------------------");
+
+        // profiling
+        System.out.println(SimpleProfiler.getResults());
+
+        // learning statistics
+        System.out.println(experiment.getRounds().getSummary());
+        System.out.println(statisticSul.getStatisticalData().getSummary());
+
+        // model statistics
+        System.out.println("States: " + result.size());
+        System.out.println("Sigma: " + driver.getInputs().size());
+
+        // show model
+        System.out.println();
+        System.out.println("Model: ");
+
+        GraphDOT.write(result, driver.getInputs(), System.out); // may throw IOException!
+        Visualization.visualize(result, driver.getInputs());
+
+        System.out.println("-------------------------------------------------------");
+    }
 
     public static void main(String[] args) throws Exception {
         int select = 0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter experiment number:");
         select = Integer.parseInt(br.readLine());
-        if(select != 0){
+        if(select == 1){
             Class c = Class.forName("institute.teias.ds.elevator.Elevator");
             Class[] parameterType = new Class[1];
             parameterType[0] = Integer.class;
             Constructor<Elevator> cons = c.getDeclaredConstructor(parameterType);
             learnElevator(cons, 1);
-        }
-        else{
+        } else if (select == 2) {
+            ElevatorControlSystem elevCS = new ElevatorControlSystem(1,4);
+            Class c= Class.forName("institute.teias.ds.mapper.ElevatorCSMapper");
+            Class[] parameterType = new Class[1];
+            parameterType[0] = Class.forName("institute.teias.ds.elevator.ElevatorControlSystem");
+            Constructor<ElevatorCSMapper> cons = c.getDeclaredConstructor(parameterType);
+            learnWithMapper(cons, elevCS);
+        } else{
             Class c = Class.forName("institute.teias.ds.elevator.ElevatorControlSystem");
             Class[] parameterType = new Class[2];
             parameterType[0] = Integer.class;
