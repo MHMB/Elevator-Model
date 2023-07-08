@@ -4,6 +4,7 @@ import institute.teias.ds.elevator.Elevator;
 import institute.teias.ds.elevator.ElevatorControlSystem;
 import institute.teias.ds.elevator.enums.ElevatorDirection;
 import institute.teias.ds.elevator.enums.ElevatorStatus;
+import institute.teias.ds.elevator.exceptions.InvalidNumber;
 
 public class ElevatorCSMapper {
     private ElevatorControlSystem elevatorControlSystem;
@@ -27,13 +28,14 @@ public class ElevatorCSMapper {
         return elevator.direction();
     }
 
-    public boolean pickUpPassenger(Integer pickUpFloor) {
+    public ElevatorDirection pickUpPassenger(Integer pickUpFloor) throws InvalidNumber {
         try {
             elevatorControlSystem.pickUp(pickUpFloor);
-            return true;
+            Elevator elevator = elevatorControlSystem.getElevators().get(0);
+            return elevator.direction();
         }
         catch (Exception e) {
-            return false;
+            throw new InvalidNumber("The provided number is invalid");
         }
     }
 }

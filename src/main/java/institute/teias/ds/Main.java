@@ -2,6 +2,8 @@ package institute.teias.ds;
 
 import de.learnlib.algorithms.lstar.mealy.ExtensibleLStarMealy;
 import de.learnlib.algorithms.lstar.mealy.ExtensibleLStarMealyBuilder;
+import de.learnlib.algorithms.ttt.mealy.TTTLearnerMealy;
+import de.learnlib.algorithms.ttt.mealy.TTTLearnerMealyBuilder;
 import de.learnlib.api.SUL;
 import de.learnlib.api.algorithm.LearningAlgorithm;
 import de.learnlib.api.oracle.EquivalenceOracle;
@@ -197,15 +199,15 @@ public class Main {
         return learner.getHypothesisModel();
     }
 
-    public static void learnWithMapper (Constructor<?> elevCsMapperConst, Object elevCsMapperParam1) throws Exception {
+    public static void lstarLearnWithMapper(Constructor<?> elevCsMapperConst, Object elevCsMapperParam1) throws Exception {
         SimplePOJOTestDriver driver = new SimplePOJOTestDriver(elevCsMapperConst, elevCsMapperParam1);
 
         driver.addInput("pick_1", "pickUpPassenger", 1);
         driver.addInput("pick_2", "pickUpPassenger", 2);
         driver.addInput("pick_3", "pickUpPassenger", 3);
-        driver.addInput("pick_4", "pickUpPassenger", 4);
+        //driver.addInput("pick_4", "pickUpPassenger", 4);
         driver.addInput("floor", "currentFloor");
-        driver.addInput("status", "elevatorStatus");
+        //driver.addInput("status", "elevatorStatus");
         driver.addInput("step", "stepTime");
 
         Alphabet<MethodInput> alphabet = driver.getInputs();
@@ -214,7 +216,7 @@ public class Main {
 
         SUL<MethodInput, MethodOutput> effectiveSul = statisticSul;
 
-        effectiveSul = SULCaches.createCache(driver.getInputs(), effectiveSul);
+        //effectiveSul = SULCaches.createCache(driver.getInputs(), effectiveSul);
 
         SULOracle<MethodInput, MethodOutput> mqOracle = new SULOracle<>(effectiveSul);
 
@@ -265,7 +267,73 @@ public class Main {
         System.out.println("-------------------------------------------------------");
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void tttLearnWithMapper (Constructor<?> elevCsMapperConst, Object elevCsMapperParam1) throws Exception {
+        SimplePOJOTestDriver driver = new SimplePOJOTestDriver(elevCsMapperConst, elevCsMapperParam1);
+
+        driver.addInput("pick_1", "pickUpPassenger", 1);
+        driver.addInput("pick_2", "pickUpPassenger", 2);
+        driver.addInput("pick_3", "pickUpPassenger", 3);
+        //driver.addInput("pick_4", "pickUpPassenger", 4);
+        driver.addInput("floor", "currentFloor");
+        //driver.addInput("status", "elevatorStatus");
+        driver.addInput("step", "stepTime");
+
+        Alphabet<MethodInput> alphabet = driver.getInputs();
+
+        StatisticSUL<MethodInput, MethodOutput> statisticSul = new ResetCounterSUL<>("membership queries", driver);
+
+        SUL<MethodInput, MethodOutput> effectiveSul = statisticSul;
+
+        // effectiveSul = SULCaches.createCache(driver.getInputs(), effectiveSul);
+
+        SULOracle<MethodInput, MethodOutput> mqOracle = new SULOracle<>(effectiveSul);
+
+        TTTLearnerMealy<MethodInput, MethodOutput> ttt = new TTTLearnerMealyBuilder<MethodInput, MethodOutput>().withAlphabet(alphabet)
+                .withOracle(mqOracle)
+                .create();
+
+        MealyEquivalenceOracle<MethodInput, MethodOutput> randomWalks =
+                new RandomWalkEQOracle<>(driver,
+                        RESET_PROBABILITY,
+                        MAX_STEPS,
+                        false,
+                        new Random(RANDOM_SEED));
+
+        Experiment.MealyExperiment<MethodInput, MethodOutput> experiment =
+                new Experiment.MealyExperiment<>(ttt, randomWalks, driver.getInputs());
+
+        experiment.setProfile(true);
+
+        experiment.setLogModels(true);
+
+        experiment.run();
+
+        MealyMachine<?, MethodInput, ?, MethodOutput> result = experiment.getFinalHypothesis();
+
+        System.out.println("-------------------------------------------------------");
+
+        // profiling
+        System.out.println(SimpleProfiler.getResults());
+
+        // learning statistics
+        System.out.println(experiment.getRounds().getSummary());
+        System.out.println(statisticSul.getStatisticalData().getSummary());
+
+        // model statistics
+        System.out.println("States: " + result.size());
+        System.out.println("Sigma: " + driver.getInputs().size());
+
+        // show model
+        System.out.println();
+        System.out.println("Model: ");
+
+        GraphDOT.write(result, driver.getInputs(), System.out); // may throw IOException!
+        Visualization.visualize(result, driver.getInputs());
+
+        System.out.println("-------------------------------------------------------");
+    }
+
+        public static void main(String[] args) throws Exception {
         int select = 0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter experiment number:");
@@ -282,7 +350,14 @@ public class Main {
             Class[] parameterType = new Class[1];
             parameterType[0] = Class.forName("institute.teias.ds.elevator.ElevatorControlSystem");
             Constructor<ElevatorCSMapper> cons = c.getDeclaredConstructor(parameterType);
-            learnWithMapper(cons, elevCS);
+            lstarLearnWithMapper(cons, elevCS);
+        } else if (select == 3) {
+            ElevatorControlSystem elevCS = new ElevatorControlSystem(1,4);
+            Class c= Class.forName("institute.teias.ds.mapper.ElevatorCSMapper");
+            Class[] parameterType = new Class[1];
+            parameterType[0] = Class.forName("institute.teias.ds.elevator.ElevatorControlSystem");
+            Constructor<ElevatorCSMapper> cons = c.getDeclaredConstructor(parameterType);
+            tttLearnWithMapper(cons, elevCS);
         } else{
             Class c = Class.forName("institute.teias.ds.elevator.ElevatorControlSystem");
             Class[] parameterType = new Class[2];
@@ -299,6 +374,47 @@ public class Main {
 
 //        Visualization.visualize(elevCS1Model, elevCS1Model.getInputAlphabet(), true);
 
-
+//        ElevatorControlSystem elevCs = new ElevatorControlSystem(1, 3);
+//        //pick_1
+//        elevCs.pickUp(1);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //pick_1
+//        elevCs.pickUp(1);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //step
+//        elevCs.step();
+//        System.out.println(elevCs.getElevators().get(0).direction());
+//        //pick_2
+//        elevCs.pickUp(2);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //pick_1
+//        elevCs.pickUp(1);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //floor
+//        System.out.println(elevCs.getElevators().get(0).currentFloor());
+//        //step
+//        elevCs.step();
+//        System.out.println(elevCs.getElevators().get(0).direction());
+//        //floor
+//        System.out.println(elevCs.getElevators().get(0).currentFloor());
+//        //pick_2
+//        elevCs.pickUp(2);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //step
+//        elevCs.step();
+//        System.out.println(elevCs.getElevators().get(0).direction());
+//        //floor
+//        System.out.println(elevCs.getElevators().get(0).currentFloor());
+//        //pick_2
+//        elevCs.pickUp(2);
+//        System.out.println(elevCs.getElevators().get(0).status());
+//        //step
+//        elevCs.step();
+//        System.out.println(elevCs.getElevators().get(0).direction());
+//        //step
+//        elevCs.step();
+//        System.out.println(elevCs.getElevators().get(0).direction());
+//        //floor
+//        System.out.println(elevCs.getElevators().get(0).currentFloor());
     }
 }
